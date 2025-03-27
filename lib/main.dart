@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
     return Provider(
       auth: Auth(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'EduDash Host App',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
@@ -33,6 +34,10 @@ class MyApp extends StatelessWidget {
             ),
             titleMedium: TextStyle(
               fontSize: 32,
+            ),
+            titleSmall: TextStyle(
+              fontSize: 18,
+              fontFamily: "DePixel"
             ),
             bodyLarge: TextStyle(
               fontSize: 24,

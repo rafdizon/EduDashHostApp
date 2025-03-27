@@ -1,0 +1,2 @@
+C:/Users/63955/Documents/CODES/Flutter/edudash_admin/android/app/.cxx/RelWithDebInfo/1r4n5c2o/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/63955/Documents/CODES/Flutter/edudash_admin/android/app/.cxx/RelWithDebInfo/1r4n5c2o/armeabi-v7a/CMakeFiles/rebuild_cache.dir

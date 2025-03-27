@@ -42,11 +42,7 @@ class _GameViewPageState extends State<GameViewPage> {
         ),
         title: Text(
           title,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.normal
-          ),
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.white),
         ),
         actions: [
           PopupMenuButton(

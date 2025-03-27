@@ -6,8 +6,16 @@ import 'package:logger/logger.dart';
 
 class FireStoreService {
   final CollectionReference quizzes = FirebaseFirestore.instance.collection('custom_quiz');
+  final CollectionReference users = FirebaseFirestore.instance.collection('users');
   final logger = Logger();
 
+  Future<DocumentSnapshot> getUserData() async {
+    final id = await Auth().getCurrentUserID();
+
+    final userData = await users.doc(id).get();
+
+    return userData;
+  }
   // create
   Future<String?> addCustomGame(Map<String,dynamic> customQuiz) async {
     try {

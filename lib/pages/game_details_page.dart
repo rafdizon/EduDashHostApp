@@ -38,7 +38,7 @@ class _GameDetailesPageState extends State<GameDetailesPage> {
       rows.add(
         DataRow(
           cells: [
-            DataCell(Text(players[i]["player"].toString())),
+            DataCell(Text(players[i]["username"].toString())),
             DataCell(Text(players[i]["score"].toString()))
           ]
         )
@@ -59,10 +59,7 @@ class _GameDetailesPageState extends State<GameDetailesPage> {
         ),
         title: Text(
           title,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: Colors.white,
-            fontWeight: FontWeight.normal
-          ),
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.white),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),

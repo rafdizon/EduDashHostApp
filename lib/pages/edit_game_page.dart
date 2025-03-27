@@ -68,11 +68,7 @@ class _EditGamePageState extends State<EditGamePage> {
         ),
         title: Text(
           "Edit Game",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.normal
-          ),
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.white),
         ),
         actions: [
           TextButton(

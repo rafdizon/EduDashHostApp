@@ -20,6 +20,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
 
   final titleText = TextEditingController();
   var selectedSubj = "English";
+  bool _isLoading = false;
 
   void addItem() {
     setState(() {
@@ -46,22 +47,23 @@ class _CreateGamePageState extends State<CreateGamePage> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(), 
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           )
         ),
         title: Text(
           "Create Game",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.normal
-          ),
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.white),
         ),
         actions: [
           TextButton(
             onPressed: () async {
+              setState(() {
+                if(!_isLoading) {
+                  _isLoading = true;
+                } 
+              });
               quizObj = {
                 'title' : titleText.text,
                 'subject' : selectedSubj,
@@ -78,6 +80,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
               
               final error = await FireStoreService().addCustomGame(quizObj);
               
+              setState(() {
+                if(_isLoading) {
+                  _isLoading = false;
+                } 
+              });
+
               if(error == null) {
                 Navigator.of(context).pop();
               } else {
@@ -91,7 +99,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 );
               }
             },
-            child: Text('Save', style: TextStyle(color: Colors.white),),
+            child: _isLoading ? const CircularProgressIndicator(color: Colors.white,) : const Text('Save', style: TextStyle(color: Colors.white),),
           )
         ],
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -116,6 +124,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 DropdownMenuEntry(value: 'English', label: 'English'),
                 DropdownMenuEntry(value: 'Filipino', label: 'Filipino'),
                 DropdownMenuEntry(value: 'Math', label: 'Mathematics'),
+                DropdownMenuEntry(value: 'Science', label: 'Science'),
                 DropdownMenuEntry(value: 'Other', label: 'Other...'),
               ],
               initialSelection: 'English',
@@ -143,11 +152,16 @@ class _CreateGamePageState extends State<CreateGamePage> {
                       children: [
                         TextField(
                           style: Theme.of(context).textTheme.bodyMedium,
-                          controller: fillers[index]['question']
+                          controller: fillers[index]['question'],
+                          decoration: const InputDecoration(
+                            hintText: "Question",
+                            hintStyle: TextStyle(color: Colors.black38)
+                          ),
                         ),
                         RadioListTile(
                           value: 'a',
                           groupValue: fillers[index]["correct_answer"],
+                          
                           onChanged: (value) {
                             setState(() {
                               fillers[index]["correct_answer"] = value;
@@ -155,7 +169,11 @@ class _CreateGamePageState extends State<CreateGamePage> {
                           },
                           title: TextField(
                             style: Theme.of(context).textTheme.bodySmall,
-                            controller:  fillers[index]['choice_a']
+                            controller:  fillers[index]['choice_a'],
+                            decoration: const InputDecoration(
+                              hintText: "Choice A",
+                              hintStyle: TextStyle(color: Colors.black38)
+                            ),
                           )
                         ),
                         RadioListTile(
@@ -168,7 +186,11 @@ class _CreateGamePageState extends State<CreateGamePage> {
                           },
                           title: TextField(
                             style: Theme.of(context).textTheme.bodySmall,
-                            controller:  fillers[index]['choice_b']
+                            controller:  fillers[index]['choice_b'],
+                            decoration: const InputDecoration(
+                              hintText: "Choice B",
+                              hintStyle: TextStyle(color: Colors.black38)
+                            ),
                           )
                         ),
                         RadioListTile(
@@ -181,7 +203,11 @@ class _CreateGamePageState extends State<CreateGamePage> {
                           },
                           title: TextField(
                             style: Theme.of(context).textTheme.bodySmall,
-                            controller:  fillers[index]['choice_c']
+                            controller:  fillers[index]['choice_c'],
+                            decoration: const InputDecoration(
+                              hintText: "Choice C",
+                              hintStyle: TextStyle(color: Colors.black38)
+                            ),
                           )
                         ),
                       ],

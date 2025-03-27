@@ -106,4 +106,12 @@ class Auth {
     
     return null;
   }
+  Future<void> sendPasswordResetEmail({required String email, required BuildContext context}) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }

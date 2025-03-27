@@ -14,6 +14,7 @@ class _SignupPageState extends State<SignupPage> {
   var isPasswordView = true;
   var isConfPasswordView = true;
 
+  bool _isLoading = false;
   final TextEditingController controllerEmail = TextEditingController();
   final TextEditingController controllerPassword = TextEditingController();
   final TextEditingController controllerRepeatPassword = TextEditingController();
@@ -22,13 +23,9 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Sign-Up',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.normal
-          ),
+        title: Text(
+          'Sign Up',
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.white),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
         centerTitle: true,
@@ -45,7 +42,7 @@ class _SignupPageState extends State<SignupPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'E-mail or Phone Number',
+                      'E-mail',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     TextField(
@@ -128,7 +125,10 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     SizedBox(height: 15),
                     TextButton(
-                      onPressed: () async {
+                      onPressed: _isLoading ? null : () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
                         if(controllerPassword.text == controllerRepeatPassword.text){
                           if (!(controllerEmail.text == null || controllerEmail.text == "") || !(controllerUsername.text == null || controllerUsername.text == "") || !(controllerPassword.text == null || controllerPassword.text == "")) {
                             await Auth().createUserWithEmailAndPassword(
@@ -162,21 +162,23 @@ class _SignupPageState extends State<SignupPage> {
                             fontSize: 12,
                           );
                         }
-                        
+                        setState(() {
+                          _isLoading = false;
+                        });
                       }, 
-                      child: Text(
-                        'Sign-up',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14
-                        ),
-                      ),
                       style: TextButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
                         minimumSize: Size(double.infinity, 40),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)
                         )
+                      ),
+                      child: _isLoading ? const Center(child: CircularProgressIndicator()) : const Text(
+                        'Sign-up',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14
+                        ),
                       ),
                     ),
                   ],
